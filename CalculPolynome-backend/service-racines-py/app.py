@@ -6,20 +6,20 @@ app = Flask(__name__)
 @app.route('/racines', methods=['POST'])
 def calculate_roots():
     try:
-        # Récupérer les données JSON envoyées par l'utilisateur
+        # On récupère les données JSON envoyées par l'utilisateur
         data = request.get_json()
 
         equation = data.get("equation", "")
         variable = data.get("variable", "x")
 
-        # Vérifier si l'équation est fournie
+        # verification si l'équation est fournie
         if not equation:
             return jsonify({
                 "error": "Aucune équation n'a été fournie.",
                 "success": False
             }), 400
 
-        # Calculer les racines
+        # calcul des racines
         result = find_roots(equation, variable)
 
         return jsonify(result)
