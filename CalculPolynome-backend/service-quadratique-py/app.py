@@ -7,7 +7,7 @@ app = Flask(__name__)
 def resolve_quadratic():
     data = request.json
     try:
-        # Extraire les coefficients
+        # extraction des coefficients
         a = data.get('a')
         b = data.get('b')
         c = data.get('c')
@@ -18,10 +18,10 @@ def resolve_quadratic():
         if a == 0:
             return jsonify({"error": "Ce n'est pas une équation quadratique, car 'a' = 0.", "success": False}), 400
 
-        # Définir la variable symbolique x
+        # définition de la variable symbolique x
         x = symbols('x')
 
-        # Construire et résoudre l'équation
+        # construction et la résolution de  l'équation
         equation = Eq(a * x**2 + b * x + c, 0)
         solutions = solve(equation, x)
 

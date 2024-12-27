@@ -1,27 +1,20 @@
 from sympy import symbols, Eq, solve
 
 def resolve_quadratic(a, b, c):
-    """
-    Résout une équation quadratique de la forme ax^2 + bx + c = 0.
-    
-    :param a: Coefficient de x^2
-    :param b: Coefficient de x
-    :param c: Terme constant
-    :return: Les racines de l'équation quadratique
-    """
+
     try:
         if a == 0:
             raise ValueError("Ce n'est pas une équation quadratique, car a = 0.")
-        
-        # Définir la variable symbolique x
+
+        # Définition de la variable symbolique x
         x = symbols('x')
-        
-        # Construire l'équation
+
+        # construction l'équation
         equation = Eq(a * x**2 + b * x + c, 0)
-        
-        # Résoudre l'équation
+
+        # réssolution de l'équation
         solutions = solve(equation, x)
-        
+
         return {
             "equation": f"{a}x^2 + {b}x + {c} = 0",
             "roots": [str(solution) for solution in solutions],
