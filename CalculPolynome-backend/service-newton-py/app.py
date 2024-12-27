@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/newton', methods=['POST'])
 def solve_with_newton():
     try:
-        # Récupérer les données JSON de la requête
+        # on récupère les données JSON de la requête
         data = request.get_json()
         equation = data.get("equation")
         variable = data.get("variable", "x")
@@ -20,7 +20,7 @@ def solve_with_newton():
                 "success": False
             }), 400
 
-        # Appeler la méthode de Newton
+        # appel la méthode de Newton
         result = newton_method(equation, variable, float(initial_guess), float(tolerance), int(max_iterations))
 
         return jsonify(result), 200
