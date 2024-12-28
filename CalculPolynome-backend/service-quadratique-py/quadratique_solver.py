@@ -16,7 +16,7 @@ def resolution_quadratique(a, b, c):
         solutions = solve(equation, x)
 
         # Formatage des solutions avec un arrondi à 2 chiffres après la virgule
-        roots = [str(round(float(solution), 2)) for solution in solutions]
+        roots = [round(float(solution), 2) for solution in solutions]
 
         # Stockage des résultats dans la base de données
         session = SessionLocal()
@@ -25,7 +25,7 @@ def resolution_quadratique(a, b, c):
             b=b,
             c=c,
             equation=f"{a}x^2 + {b}x + {c} = 0",
-            roots=", ".join(roots)
+            roots=", ".join(map(str, roots))  # Conversion des racines en chaînes
         )
         session.add(quadratic_equation)
         session.commit()
@@ -33,7 +33,7 @@ def resolution_quadratique(a, b, c):
 
         return {
             "equation": f"{a}x^2 + {b}x + {c} = 0",
-            "roots": roots,
+            "roots": roots,  # Liste des racines arrondies
             "success": True
         }
     except Exception as e:
