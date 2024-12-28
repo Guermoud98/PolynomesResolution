@@ -12,14 +12,14 @@ def calculate_roots():
         equation = data.get("equation", "")
         variable = data.get("variable", "x")
 
-        # verification si l'équation est fournie
+        # Vérification si l'équation est fournie
         if not equation:
             return jsonify({
                 "error": "Aucune équation n'a été fournie.",
                 "success": False
             }), 400
 
-        # calcul des racines
+        # Calcul des racines
         result = find_roots(equation, variable)
 
         return jsonify(result)
