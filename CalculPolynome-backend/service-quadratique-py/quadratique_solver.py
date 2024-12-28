@@ -1,7 +1,7 @@
 from sympy import symbols, Eq, solve
+from models import SessionLocal, QuadraticEquation
 
-def resolve_quadratic(a, b, c):
-
+def resolution_quadratique(a, b, c):
     try:
         if a == 0:
             raise ValueError("Ce n'est pas une équation quadratique, car a = 0.")
@@ -9,15 +9,31 @@ def resolve_quadratic(a, b, c):
         # Définition de la variable symbolique x
         x = symbols('x')
 
-        # construction l'équation
+        # Construction de l'équation
         equation = Eq(a * x**2 + b * x + c, 0)
 
-        # réssolution de l'équation
+        # Résolution de l'équation
         solutions = solve(equation, x)
+
+        # Formatage des solutions avec un arrondi à 2 chiffres après la virgule
+        roots = [str(round(float(solution), 2)) for solution in solutions]
+
+        # Stockage des résultats dans la base de données
+        session = SessionLocal()
+        quadratic_equation = QuadraticEquation(
+            a=a,
+            b=b,
+            c=c,
+            equation=f"{a}x^2 + {b}x + {c} = 0",
+            roots=", ".join(roots)
+        )
+        session.add(quadratic_equation)
+        session.commit()
+        session.close()
 
         return {
             "equation": f"{a}x^2 + {b}x + {c} = 0",
-            "roots": [str(solution) for solution in solutions],
+            "roots": roots,
             "success": True
         }
     except Exception as e:
@@ -25,7 +41,3 @@ def resolve_quadratic(a, b, c):
             "error": f"Erreur lors de la résolution : {e}",
             "success": False
         }
-
-# Exemple d'utilisation
-result = resolve_quadratic(1, -5, 6)  # Résout l'équation x^2 - 5x + 6 = 0
-print(result)

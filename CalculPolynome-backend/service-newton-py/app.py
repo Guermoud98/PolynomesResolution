@@ -40,11 +40,11 @@ def solve_with_newton():
         finally:
             session.close()
 
-        # Retourner le résultat au client
+        #  resultat
         return jsonify(result), 200
 
     except Exception as e:
-        # En cas d'erreur, retourner une réponse avec un message d'erreur
+        # En cas d'erreur
         return jsonify({
             "error": str(e),
             "success": False

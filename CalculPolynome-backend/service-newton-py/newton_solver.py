@@ -3,7 +3,7 @@ from sympy import symbols, diff, lambdify, sympify
 # Fonction pour résoudre une équation avec la méthode de Newton
 def newton_method(equation, variable, initial_guess, tolerance=1e-7, max_iterations=100):
     try:
-        # Remplacer ^ par ** pour que l'équation soit compatible avec SymPy
+        # on remplace ^ par ** pour que l'équation soit compatible avec SymPy
         equation = equation.replace("^", "**")
         x = symbols(variable)  # Définir la variable symbolique
         equation = sympify(equation)  # Convertir l'équation en objet SymPy
@@ -22,7 +22,7 @@ def newton_method(equation, variable, initial_guess, tolerance=1e-7, max_iterati
             f_value = f(current_guess)
             f_prime_value = f_prime(current_guess)
 
-            # Éviter une division par zéro
+            # on evite la  division par zéro
             if abs(f_prime_value) < 1e-12:
                 raise ValueError("La dérivée est proche de zéro, la méthode de Newton ne peut pas continuer.")
 
