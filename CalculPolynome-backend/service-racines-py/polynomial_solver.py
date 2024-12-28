@@ -1,19 +1,30 @@
 from sympy import symbols, solve, simplify
+from models import SessionLocal, PolynomialRoots
 
 def find_roots(equation, variable):
     try:
-        # définition de la variable symbolique
+        # Définition de la variable symbolique
         x = symbols(variable)
 
-        # Simplification de l'équation si nécessaire
+        # Simplification de l'équation
         simplified_eq = simplify(equation)
 
-        # les racines
+        # Calcul des racines
         roots = solve(simplified_eq, x)
+
+        # Arrondir les racines à 2 décimales
+        rounded_roots = [str(round(float(root), 2)) if root.is_real else str(root) for root in roots]
+
+        # Stockage des données dans la bd
+        session = SessionLocal()
+        polynomial = PolynomialRoots(equation=equation, roots=", ".join(rounded_roots))
+        session.add(polynomial)
+        session.commit()
+        session.close()
 
         # Retourner les racines
         return {
-            "roots": [str(root) for root in roots],
+            "roots": rounded_roots,
             "original_equation": equation,
             "success": True
         }
