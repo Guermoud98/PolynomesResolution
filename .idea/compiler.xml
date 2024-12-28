@@ -8,19 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
-        <module name="service-factorisation" />
         <module name="eureka-server" />
-      </profile>
-      <profile name="Annotation profile for service-polynome" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
-        </processorPath>
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="service-factorisation" target="17" />
       <module name="service-polynome" target="17" />
       <module name="service-racines" target="17" />
     </bytecodeTargetLevel>

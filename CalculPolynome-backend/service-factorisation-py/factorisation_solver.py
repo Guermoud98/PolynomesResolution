@@ -5,14 +5,18 @@ from models import SessionLocal, Polynomial
 
 def advanced_factorization(equation, variable):
     try:
-        # définition de la variable symbolique
+        # Définition de la variable symbolique
         x = symbols(variable)
 
-        # factorisation de l'équation avec SymPy
-        factored = str(factor(equation))
+        # Factorisation de l'équation avec SymPy
+        factored = factor(equation)
 
-        # conversion de  `**` en `^` pour l'affichage ou le stockage
-        factored_with_caret = factored.replace('**', '^')
+        # Si l'équation factorisée est identique à l'entrée, elle est invalide ou non factorisable
+        if str(factored) == equation:
+            raise ValueError("L'équation fournie n'est pas factorisable ou est invalide.")
+
+        # Conversion de `**` en `^` pour l'affichage ou le stockage
+        factored_with_caret = str(factored).replace('**', '^')
 
         # Enregistrement dans la base de données
         session = SessionLocal()
@@ -31,6 +35,6 @@ def advanced_factorization(equation, variable):
 
         return factored_with_caret
     except SympifyError:
-        return jsonify({"error": "L'équation fournie est invalide."}), 400
+        raise ValueError("L'équation fournie est invalide.")
     except Exception as e:
         raise ValueError(f"Erreur lors de la factorisation : {e}")
